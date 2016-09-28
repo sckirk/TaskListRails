@@ -1,2 +1,7 @@
-<h1>Tasks#show</h1>
-<p>Find me in app/views/tasks/show.html.erb</p>
+<ul><strong>Task Details:</strong>
+    <p></p>
+    <li>Name: <%= @task[:name] %></li>
+    <li>Description: <%= @task[:description] %></li>
+    <li>Completion Status: <%= @task[:completion_status] %></li>
+    <li>Completion Date: <%= @task[:completion_date] %></li>
+</ul>
