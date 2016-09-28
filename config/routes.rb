@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
     root 'tasks#index'
     get '/tasks' => 'tasks#index'
-    get '/tasks/:id' => 'tasks#show'
+    get '/tasks/:id', to: 'tasks#show', as: 'task'
+
 
 
 
