@@ -1,14 +1,5 @@
 <h1>NEW TASK:</h1>
 
-<%= form_for @task do |f| %>
-  <%= f.label :action %>
-  <%= f.text_field :action %>
+<%= render 'form' %>
 
-  <%= f.label :description %>
-  <%= f.text_field :description %>
-
-  <%= f.label :completed_at %>
-  <%= f.datetime_local_field :completed_at %>
-
-  <%= f.submit "Submit" %>
-<% end %>
+<%= link_to 'back', tasks_path %>
