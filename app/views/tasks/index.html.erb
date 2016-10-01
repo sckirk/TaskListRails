@@ -1,7 +1,7 @@
 <ul><h2>Task List:</h2>
     <% @tasks.each do |t| %>
         <li>
-            <%= link_to(t[:name]+" "+t[:description], task_path(t[:id])) %>
+            <%= link_to(t[:action]+" "+t[:description], task_path(t[:id])) %>
         </li>
     <% end %>
 </ul>
