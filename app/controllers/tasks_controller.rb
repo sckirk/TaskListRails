@@ -36,6 +36,16 @@ class TasksController < ApplicationController
         end
     end
 
+    def complete
+        @task = Task.find(params[:id])
+        @task.mark_complete
+        if @task.save
+            redirect_to task_path
+        else
+            render :index
+        end    
+    end
+
     def destroy
         Task.find(params[:id]).destroy
         redirect_to tasks_path

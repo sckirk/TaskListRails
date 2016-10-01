@@ -7,4 +7,7 @@ class Task < ActiveRecord::Base
         self[:action] = val.upcase
     end
 
+    def mark_complete
+        self[:completed_at] = Time.now.utc
+    end
 end
