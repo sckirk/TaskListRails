@@ -1,18 +1,24 @@
-<h2>Task List:</h2>
+<h1><%= link_to("Add a new task here...", tasks_new_path) %></h1>
+
+<h2>Pending Task List:</h2>
     <% @tasks.each do |t| %>
         <p>
-            <%= "#{t[:action]} #{t[:description]}" %>
-            <%= link_to("details", task_path(t[:id])) %>
-            <%= link_to("destroy", task_path(t[:id]), method: :delete, data: {confirm: "Are you sure you want to permanently destroy this task?"}) %>
-            <%= button_to("mark this task complete", task_complete_path(t), method: :patch) %>
+            <% if format_complete(t) != "Yes!" %>
+                <%= "#{t[:action]} #{t[:description]}" %>
+                <%= link_to("details", task_path(t[:id])) %>
+                <%= link_to("destroy", task_path(t[:id]), method: :delete, data: {confirm: "Are you sure you want to permanently destroy this task?"}) %>
+                <%= button_to("mark this task complete", task_complete_path(t), method: :patch) %>
+            <% end %>
         </p>
     <% end %>
 
-
-<h3><%= link_to("Add a new task here...", tasks_new_path) %></h3>
-
-
-
-<!-- rails default content: -->
-<!-- <h1>Tasks#index</h1>
-<p>Find me in app/views/tasks/index.html.erb</p> -->
+<h2>Completed Tasks:</h2>
+    <% @tasks.each do |t| %>
+        <p>
+            <% if format_complete(t) == "Yes!" %>
+                <%= "#{t[:action]} #{t[:description]}"%>
+                <%= link_to("details",task_path(t[:id])) %>
+                <%= link_to("destroy",task_path(t[:id]), method: :delete,data: {confirm: "Are you sure youwant to permanently destroy thistask?"}) %>
+            <% end %>
+        </p>
+    <% end %>
