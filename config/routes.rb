@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+    get "/auth/:provider/callback" =>  "sessions#create"
+
     root 'tasks#index'
     get '/tasks' => 'tasks#index'
 
