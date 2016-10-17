@@ -1,3 +1,8 @@
+<h1>Login successful.</h1>
+<h2>Welcome <%= @user.email %>!</h2>
+
+<%= button_to "Log out", sessions_path, method: :delete %>
+
 <h1><%= link_to("Add a new task here...", tasks_new_path) %></h1>
 
 <h2>Pending Task List:</h2>

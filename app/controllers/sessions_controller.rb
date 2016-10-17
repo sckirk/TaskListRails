@@ -14,10 +14,18 @@ class SessionsController < ApplicationController
         # Save the user ID in the session
         session[:user_id] = @user.id
 
-        redirect_to sessions_path
+        redirect_to tasks_path
     end
 
     def index
         @user = User.find(session[:user_id]) # < recalls the value set in a previous request
+    end
+
+    def login_failure
+    end
+
+    def destroy
+        session.delete(:user_id)
+        redirect_to login_failure_path
     end
 end

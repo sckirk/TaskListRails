@@ -1,6 +1,11 @@
 class TasksController < ApplicationController
-
     def index
+        if session[:user_id].nil?
+            redirect_to login_failure_path
+        else
+            @user = User.find(session[:user_id]) # < recalls the value set in a previous request
+        end
+
         @tasks = Task.all
     end
 
@@ -43,7 +48,7 @@ class TasksController < ApplicationController
             redirect_to task_path
         else
             render :index
-        end    
+        end
     end
 
     def destroy
