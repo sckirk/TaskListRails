@@ -1,10 +1,8 @@
 class Task < ActiveRecord::Base
+    belongs_to :user
+
     def is_complete?
         return completed_at != nil
-    end
-
-    def action=(val)
-        self[:action] = val.upcase
     end
 
     def mark_complete

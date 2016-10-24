@@ -15,7 +15,7 @@ class TasksController < ApplicationController
 
     def create
         @task = Task.new(task_params)
-        @task[:action] = action=(@task[:action])
+        @task[:action] = @task[:action].upcase
         if @task.save  # successful
             redirect_to tasks_path
         else  # unsuccessful, return to form
@@ -33,7 +33,7 @@ class TasksController < ApplicationController
 
     def update
         @task = Task.find(params[:id])
-        @task[:action] = action=(@task[:action])
+        @task[:action] = @task[:action].upcase
         if @task.update(task_params)
             redirect_to tasks_path
         else
