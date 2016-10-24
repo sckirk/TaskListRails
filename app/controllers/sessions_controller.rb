@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+    skip_before_action :require_login, only: [:login, :create]
+
     def create
         auth_hash = request.env['omniauth.auth']
         redirect to login_failure_path unless auth_hash['uid']
@@ -8,7 +10,7 @@ class SessionsController < ApplicationController
             # User doesn't match anything in the DB.
             # Attempt to create a new user.
             @user = User.build_from_github(auth_hash)
-            render :creation_failure unless @user.save
+            render :login_failure unless @user.save
         end
 
         # Save the user ID in the session
@@ -17,15 +19,16 @@ class SessionsController < ApplicationController
         redirect_to tasks_path
     end
 
-    def index
-        @user = User.find(session[:user_id]) # < recalls the value set in a previous request
-    end
+    # def index
+    #     @user = User.find(session[:user_id]) # < recalls the value set in a previous request
+    # end
 
-    def login_failure
-    end
+    def login; end
+
+    def login_failure; end
 
     def destroy
         session.delete(:user_id)
-        redirect_to login_failure_path
+        redirect_to login_path
     end
 end

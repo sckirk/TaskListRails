@@ -1,12 +1,9 @@
 class TasksController < ApplicationController
-    def index
-        if session[:user_id].nil?
-            redirect_to login_failure_path
-        else
-            @user = User.find(session[:user_id]) # < recalls the value set in a previous request
-        end
+    before_action :set_user
+    before_action :find_valid_task, :only [:show, :edit, :update]
 
-        @tasks = Task.all
+    def index
+        @tasks = Task.where(user_id: @current_user.id)
     end
 
     def new
@@ -23,16 +20,11 @@ class TasksController < ApplicationController
         end
     end
 
-    def show
-        @task = Task.find(params[:id])
-    end
+    def show; end
 
-    def edit
-        @task = Task.find(params[:id])
-    end
+    def edit; end
 
     def update
-        @task = Task.find(params[:id])
         @task[:action] = @task[:action].upcase
         if @task.update(task_params)
             redirect_to tasks_path
@@ -57,6 +49,16 @@ class TasksController < ApplicationController
     end
 
     private
+
+    def set_user
+        self.current_user
+    end
+
+    def find_valid_task
+        if Task.find(params[:id]).user_id == @current_user.id
+            @task = Task.find(params[:id])
+        end
+    end
 
     def task_params
         params.require(:task).permit(:action, :description, :completed_at)

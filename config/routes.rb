@@ -3,10 +3,12 @@ Rails.application.routes.draw do
 
     get "/sessions/login_failure", to: "sessions#login_failure", as: "login_failure"
 
-    get "/sessions", to: "sessions#index", as: "sessions"
+    get "/sessions/login", to: "sessions#login", as: "login"
+
+    # get "/sessions", to: "sessions#index", as: "sessions"
 
     delete "/sessions", to: "sessions#destroy"
-    
+
 
     root 'tasks#index'
     get '/tasks' => 'tasks#index'
