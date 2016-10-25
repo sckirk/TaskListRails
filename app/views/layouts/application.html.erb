@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>TaskListRails</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
+    <title>TaskListRails</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-
-<%= yield %>
+    <header>
+        <nav class="top-bar">
+            <ul class="menu top-bar-left">
+                <li class="menu-text">Task List</li>
+                <li><%= link_to "Tasks", tasks_path %></li>
+                <li><%= link_to "New Task", tasks_new_path %></li>
+            </ul>
+            <ul class="menu top-bar-right">
+                <li class="menu-text"><%= login_status %></li>
+                <li><%= login_button %></li>
+            </ul>
+        </nav>
+    </header>
+    <%= yield %>
 
 </body>
 </html>

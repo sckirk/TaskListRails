@@ -1,16 +1,12 @@
 Rails.application.routes.draw do
-    get "/auth/:provider/callback" =>  "sessions#create"
+    root "sessions#login"
 
+    get "/auth/:provider/callback" =>  "sessions#create"
+    get "/auth/login", to: "sessions#login", as: "login"
+    delete "/auth/logout", to: "sessions#logout", as: "logout"
     get "/sessions/login_failure", to: "sessions#login_failure", as: "login_failure"
 
-    get "/sessions/login", to: "sessions#login", as: "login"
 
-    # get "/sessions", to: "sessions#index", as: "sessions"
-
-    delete "/sessions", to: "sessions#destroy"
-
-
-    root 'tasks#index'
     get '/tasks' => 'tasks#index'
 
     get 'tasks/new' => 'tasks#new'
@@ -24,10 +20,6 @@ Rails.application.routes.draw do
     patch 'tasks/:id/complete' => 'tasks#complete', as: 'task_complete'
 
     delete 'tasks/:id' => 'tasks#destroy'
-
-
-
-
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,9 +1,8 @@
 class TasksController < ApplicationController
-    before_action :set_user
-    before_action :find_valid_task, :only [:show, :edit, :update]
+    before_action :find_valid_task, except: [:index, :new, :create]
 
     def index
-        @tasks = Task.where(user_id: @current_user.id)
+        @tasks = @current_user.tasks
     end
 
     def new
@@ -13,8 +12,9 @@ class TasksController < ApplicationController
     def create
         @task = Task.new(task_params)
         @task[:action] = @task[:action].upcase
+        @task.user_id = session[:user_id]
         if @task.save  # successful
-            redirect_to tasks_path
+            redirect_to task_path(@task)
         else  # unsuccessful, return to form
             render :new
         end
@@ -25,16 +25,16 @@ class TasksController < ApplicationController
     def edit; end
 
     def update
+        @task.assign_attributes(task_params)
         @task[:action] = @task[:action].upcase
-        if @task.update(task_params)
-            redirect_to tasks_path
+        if @task.save
+            redirect_to task_path(@task)
         else
             render :edit
         end
     end
 
     def complete
-        @task = Task.find(params[:id])
         @task.mark_complete
         if @task.save
             redirect_to task_path
@@ -44,25 +44,20 @@ class TasksController < ApplicationController
     end
 
     def destroy
-        Task.find(params[:id]).destroy
+        @task.destroy
         redirect_to tasks_path
     end
 
     private
-
-    def set_user
-        self.current_user
-    end
-
     def find_valid_task
-        if Task.find(params[:id]).user_id == @current_user.id
-            @task = Task.find(params[:id])
+        begin
+            @task = @current_user.tasks.find(params[:id])
+        rescue ActiveRecord::RecordNotFound
+            render file: "public/404", status: :not_found
         end
     end
 
     def task_params
         params.require(:task).permit(:action, :description, :completed_at)
     end
-
-
 end

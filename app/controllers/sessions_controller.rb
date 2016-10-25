@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
             # User doesn't match anything in the DB.
             # Attempt to create a new user.
             @user = User.build_from_github(auth_hash)
-            render :login_failure unless @user.save
+            render :creation_failure unless @user.save
         end
 
         # Save the user ID in the session
@@ -27,8 +27,7 @@ class SessionsController < ApplicationController
 
     def login_failure; end
 
-    def destroy
+    def logout
         session.delete(:user_id)
-        redirect_to login_path
     end
 end
