@@ -2,7 +2,7 @@ Rails.application.routes.draw do
     root "sessions#login"
 
     get "/auth/:provider/callback" =>  "sessions#create"
-    get "/auth/login", to: "sessions#login", as: "login"
+    get "/auth/github", to: "sessions#login", as: "login"
     delete "/auth/logout", to: "sessions#logout", as: "logout"
     get "/sessions/login_failure", to: "sessions#login_failure", as: "login_failure"
 

@@ -32,6 +32,6 @@ module ApplicationHelper
             path = logout_path
             method = :delete
         end
-        button_to text, path, method: method
+        link_to text, path, method: method
     end
 end
